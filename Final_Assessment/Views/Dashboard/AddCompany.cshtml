@@ -1,0 +1,311 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AddCompany</title>
+    <link href="
+https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+
+    <script src="
+https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            align-items: center;
+            justify-content: center;
+        }
+
+        nav {
+            background-color: #0c4da2;
+        }
+
+        .nav-link {
+            color: white;
+        }
+
+            .nav-link:hover {
+                color: darkorange;
+            }
+
+
+
+
+
+        button:hover {
+            background-color: darkorange;
+        }
+
+        span {
+            color: red;
+        }
+
+        .navbarCenter {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-left: 90px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg ">
+        <div class="container-fluid">
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse navbarCenter">
+                <ul class="navbar-nav ">
+                    <li class="nav-item">
+                        <a class="nav-link active fs-4" aria-current="page" href="/Dashboard/Index">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fs-4" href="#">Add Company</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fs-4" href="/Dashboard/GetCompanyList">Company List</a>
+                    </li>
+                </ul>
+            </div>
+            <div>
+
+            </div>
+            <ul class="navbar-nav ">
+                <li class="nav-item">
+                    <p class="fs-3 text-white">@ViewBag.sess</p>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+
+    <div class="container w-50 m-auto ">
+        <div class="w-50 m-auto shadow p-5">
+            <h2 class="mt-5"> Add Company Information </h2>
+            <form id="signupForm">
+
+
+                <div class="form-group  ">
+                    <label for="companyName">Company Name:</label>
+                    <input type="text" class="form-control" id="companyName" name="companyName" required>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label for="companyEmail">Company Email:</label>
+                    <input type="email" class="form-control" id="companyEmail" name="companyEmail" required>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label for="companyURL">Company URL:</label>
+                    <input type="text" class="form-control" id="companyURL" name="companyURL"><br />
+                </div>
+
+                <div class="form-group">
+                    <label for="remark">Remark:</label>
+                    <textarea id="remark" class="form-control" name="remark"></textarea><br />
+                </div>
+
+                <div class="form-group">
+
+                    <label for="companyLocation">Company Location:</label>
+                    <input type="text" id="companyLocation" class="form-control" name="companyLocation"><br />
+
+                </div>
+
+                <div class="form-group">
+                    <label for="userId">User ID:</label>
+                    <input type="text" id="userId" class="form-control" name="userId"><br />
+
+                </div>
+
+                <div class="form-group">
+                    <label for="phoneNumber">Phone Number:</label>
+                    <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber"><br />
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="numberOfEmployees">Number of Employees:</label>
+                    <input type="number" class="form-control" id="numberOfEmployees" name="numberOfEmployees"><br />
+
+
+                </div>
+                <div class="form-group">
+
+
+                    <label for="timezone">Timezone:</label>
+                    <input type="text" class="form-control" id="timezone" name="timezone"><br />
+
+                </div>
+                <div class="form-group">
+
+
+                    <label for="country">Country:</label>
+                    @Html.DropDownList("Country", ViewBag.roleDes as SelectList, "select", new { @class = "form-control", id = "CountryId", onchange = "get_tbl(this.value)" })
+
+
+
+
+                </div>
+                <div class="form-group">
+
+
+                    <label for="state">State:</label>
+                    @*@Html.DropDownList("state", ViewBag.Statelist as SelectList, "select", new { @class = "form-control", id = "StateId",  })*@
+
+                    <select id="category" class="form-select" onchange="get_city(this.value)">
+                        <option value="">Select</option>
+
+                        @foreach (var item in ViewBag.Statelist)
+                        {
+                            <option value="@item.Value"> @item.Text</option>
+                        }
+                    </select>
+
+                </div>
+                <div class="form-group">
+
+                    <label for="city">City:</label>
+                    @*@Html.DropDownList("City", ViewBag.roleDes2 as SelectList, "select", new { @class = "form-control", id = "CityId" })*@
+
+                    <select id="city" class="form-select">
+                        <option value="">Select</option>
+
+                        @foreach (var item in ViewBag.roleDes2)
+                        {
+                            <option value="@item.Value"> @item.Text</option>
+                        }
+                    </select>
+
+                </div>
+                <br />
+
+
+                <button type="submit" id="submit" class="btn btn-primary">Submit</button>
+                <p> visit to Company <a href="/Dashboard/GetCompanyList">List</a> </p>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function get_city(id) {
+            console.log(id)
+            //debugger;
+            $.ajax({
+                url: "/Dashboard/cityfilter?id=" + id,
+                type: "POST",
+                success: function (data) {
+                    console.log("data ", data);
+                    var categ = $("#city").html("");
+                    categ.append('<option value=""> Select </option>')
+                    if (data != null && data != undefined) {
+                        for (var i = 0; i < data.length; i++) {
+                            categ.append("<option value='" + data[i].cityId + "'>" + data[i].cityName + "</option>");
+                        }
+                    }
+                },
+                error: function (err) {
+                    console.error(err.message);
+                    return;
+                },
+            });
+        }
+
+    </script>
+
+
+
+    <script>
+        function get_tbl(id) {
+          //  console.log(id)
+            //debugger;
+            $.ajax({
+                url: "/Dashboard/statefilter?id=" + id,
+                type: "POST",
+                success: function (data) {
+                    console.log("data ", data);
+                    var categ = $("#category").html("");
+                    categ.append('<option value=""> Select </option>')
+                    if (data != null && data != undefined) {
+                        for (var i = 0; i < data.length; i++) {
+                            categ.append("<option value='" + data[i].stateId + "'>" + data[i].stateName + "</option>");
+                        }
+                    }
+                },
+                error: function (err) {
+                    console.error(err.message);
+                    return;
+                },
+            });
+        }
+    </script>
+    <script>
+
+
+        $(document).ready(function () {
+
+            $("#submit").click(function (event) {
+                event.preventDefault();
+
+                let obj = {
+                    CompanyName: $("#companyName").val(),
+                    CompanyEmail: $("#companyEmail").val(),
+                    CompanyURL: $("#companyURL").val(),
+                    Remark: $("#remark").val(),
+                    CompanyLocation: $("#companyLocation").val(),
+                    UserId: $("#userId").val(),
+                    Phone_Number: $("#phoneNumber").val(),
+                    Number_of_Employe: $("#numberOfEmployees").val(),
+                    Timezone: $("#timezone").val(),
+                    Country: $("#CountryId").val(),
+                    State: $("#category").val(),
+                    City: $("#city").val(),
+                }
+
+                $.ajax({
+                    url: "/Dashboard/saveCompany",
+                    type: "POST",
+                    data: obj,
+                    success: function (result) {
+
+                        if (result.status) {
+                            alert(result.message);
+                            document.getElementById("sucmsg").innerHTML = result['message'];
+                            document.getElementById("signupForm").reset();
+                            window.location.href = "/Dashboard/GetCompanyList";
+                        } else {
+                            alert(result.message);
+                            document.getElementById("sucmsg").innerHTML = result['message'];
+                        }
+                    },
+                    error: function (err) {
+                        console.error(err.message);
+                    },
+                })
+            });
+
+
+        });
+
+    </script>
+
+
+
+
+</body>
+
+
+</html>
